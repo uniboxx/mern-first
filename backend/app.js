@@ -1,10 +1,20 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import { JSONFilePreset } from 'lowdb/node';
+
+const defaultData = { posts: [] };
+const db = await JSONFilePreset('db.json', defaultData);
+const NODEJS_ENV = process.env.NODEJS_ENV;
+console.log(NODEJS_ENV);
 
 const app = express();
 const port = 8000;
-const FEURL = 'https://mern-first-frontend.onrender.com';
+//^ attenzione l'url non deve finire con lo slash
+const FEURL =
+  NODEJS_ENV === 'production'
+    ? 'https://mern-first-frontend.onrender.com'
+    : 'http://localhost:5173';
 const BEURL = 'http://localhost:8000';
 const corsOptions = { origin: FEURL };
 

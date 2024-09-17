@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 
 import './App.css';
 
-const BEURL = 'https://mern-first-backend-zt5v.onrender.com/';
+const NODEJS_ENV = import.meta.env.MODE;
+console.log(NODEJS_ENV);
+
+const BEURL =
+  NODEJS_ENV === 'production'
+    ? 'https://mern-first-backend-zt5v.onrender.com/'
+    : 'http://localhost:8000';
 
 function App() {
   const [message, setMessage] = useState('');
