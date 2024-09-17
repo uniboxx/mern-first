@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import './App.css';
 
-const BEURL = 'http://localhost:8000';
+const BEURL = 'https://mern-first-backend-zt5v.onrender.com/';
 
 function App() {
   const [message, setMessage] = useState('');
