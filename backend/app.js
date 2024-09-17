@@ -9,7 +9,7 @@ const BEURL = 'http://localhost:8000';
 const corsOptions = { origin: FEURL };
 
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 // app.use(function (req, res, next) {
 //   res.header('Access-Control-Allow-Origin', FEURL);
 //   next();
