@@ -3,9 +3,9 @@ import cors from 'cors';
 import 'dotenv/config';
 
 const app = express();
-const port = process.env.PORT;
-const FEURL = process.env.FEURL;
-const BEURL = process.env.BEURL;
+const port = 8000;
+const FEURL = 'https://mern-first-frontend.onrender.com/';
+const BEURL = 'http://localhost:8000';
 const corsOptions = { origin: FEURL };
 
 app.use(express.json());
