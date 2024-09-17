@@ -10,10 +10,10 @@ const corsOptions = { origin: FEURL };
 
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', FEURL);
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', FEURL);
+//   next();
+// });
 
 app.get('/', (req, res) => {
   res.json({ message: 'hello world' });
