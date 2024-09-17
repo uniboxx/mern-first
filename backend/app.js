@@ -7,6 +7,7 @@ const port = process.env.PORT;
 const FEURL = process.env.FEURL;
 const BEURL = process.env.BEURL;
 const corsOptions = { origin: FEURL };
+
 app.use(express.json());
 app.use(cors(corsOptions));
 

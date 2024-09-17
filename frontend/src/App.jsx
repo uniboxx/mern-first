@@ -11,7 +11,7 @@ function App() {
     fetch(BEURL)
       .then(res => res.json())
       .then(data => setMessage(data.message));
-  }, []);
+  }, [message]);
 
   return (
     <>
