@@ -29,7 +29,7 @@ function App() {
         'Content-type': 'application/json',
       },
     };
-    fetch(BEURL + '/todos', options);
+    fetch(BEURL + 'todos', options);
     // .then(res => console.log(res))
     // .then(data => console.log(data))
     // .catch(err => console.error(err));
