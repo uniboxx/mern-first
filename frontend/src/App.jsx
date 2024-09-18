@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import './App.css';
 
@@ -69,10 +70,21 @@ function App() {
           />
         </p>
       </form>
-      <ul>
-        {todos.length > 0 &&
-          todos.map(todo => <li key={todo.id}>{todo.text}</li>)}
-      </ul>
+      <AnimatePresence>
+        <ul>
+          {todos.length > 0 &&
+            todos.map(todo => (
+              <motion.li
+                key={todo.id}
+                initial={{ y: 30, scale: 1, rotate: 90 }}
+                animate={{ y: 0, scale: [0.8, 1.2, 1], rotate: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {todo.text}
+              </motion.li>
+            ))}
+        </ul>
+      </AnimatePresence>
     </>
   );
 }
