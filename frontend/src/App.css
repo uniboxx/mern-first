@@ -40,3 +40,18 @@
 .read-the-docs {
   color: #888;
 }
+
+form label {
+  margin-right: 1rem;
+}
+
+ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  & li {
+    border: 1px solid blue;
+    padding: 0.5rem;
+  }
+}
