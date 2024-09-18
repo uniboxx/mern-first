@@ -3,17 +3,20 @@ import cors from 'cors';
 import 'dotenv/config';
 import { JSONFilePreset } from 'lowdb/node';
 
-const defaultData = { todos: [] };
+const app = express();
+const port = 8000;
+
+const defaultData = { todos: [{ id: '12345678', text: 'test 1' }] };
+console.log(defaultData);
 const db = await JSONFilePreset('db.json', defaultData);
+await db.update(({ todos }) => todos);
 const { todos } = db.data;
+console.log(todos);
 
 // await db.update(({ posts }) => posts.push('hello world'));
 // console.log(todos);
 const NODEJS_ENV = process.env.NODEJS_ENV;
 console.log(NODEJS_ENV);
-
-const app = express();
-const port = 8000;
 
 //^ attenzione l'url non deve finire con lo slash
 const FEURL =
