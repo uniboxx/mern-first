@@ -8,7 +8,7 @@ const db = await JSONFilePreset('db.json', defaultData);
 const { todos } = db.data;
 
 // await db.update(({ posts }) => posts.push('hello world'));
-console.log(todos);
+// console.log(todos);
 const NODEJS_ENV = process.env.NODEJS_ENV;
 console.log(NODEJS_ENV);
 
@@ -42,5 +42,5 @@ app.post('/todos', async (req, res) => {
 });
 
 app.listen(port, () => {
-  NODEJS_ENV === 'development' && console.log(`Server listening on ${BEURL}`);
+  if (NODEJS_ENV === 'development') console.log(`Server listening on ${BEURL}`);
 });
