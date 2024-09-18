@@ -8,7 +8,7 @@ console.log(NODEJS_ENV);
 
 const BEURL =
   NODEJS_ENV === 'production'
-    ? 'https://mern-first-backend-zt5v.onrender.com/'
+    ? 'https://mern-first-backend-zt5v.onrender.com'
     : 'http://localhost:8000';
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
         'Content-type': 'application/json',
       },
     };
-    fetch(BEURL + 'todos', options);
+    fetch(BEURL + '/todos', options);
     // .then(res => console.log(res))
     // .then(data => console.log(data))
     // .catch(err => console.error(err));
