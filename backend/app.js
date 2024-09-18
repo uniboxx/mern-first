@@ -21,7 +21,7 @@ const FEURL =
     ? 'https://mern-first-frontend.onrender.com'
     : 'http://localhost:5173';
 const BEURL = 'http://localhost:8000';
-const corsOptions = { origin: FEURL + '*' };
+const corsOptions = { origin: FEURL };
 
 app.use(express.json());
 app.use(express.text());
