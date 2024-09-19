@@ -84,7 +84,7 @@ function App() {
     async function getMessage() {
       const res = await fetch(BEURL);
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setMessage(data.message);
     }
     getMessage();
