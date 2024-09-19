@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import './App.css';
@@ -10,49 +9,86 @@ console.log(NODEJS_ENV);
 const BEURL =
   NODEJS_ENV === 'production'
     ? 'https://mern-first-backend-zt5v.onrender.com'
-    : 'http://localhost:8000';
+    : 'http://localhost:3000';
 
 function App() {
   const [message, setMessage] = useState('');
   const [text, setText] = useState('');
   const [todos, setTodos] = useState([]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const id = nanoid();
-    // console.log(id);
-    const newTodo = { id, text };
-    // console.log(newTodo);
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(newTodo),
-      headers: {
-        'Content-type': 'application/json',
-      },
-    };
-    fetch(BEURL + '/todos', options);
-    // .then(res => console.log(res))
-    // .then(data => console.log(data))
-    // .catch(err => console.error(err));
+  async function getTodos() {
+    try {
+      const res = await fetch(BEURL + '/todos');
+      const data = await res.json();
 
-    setTodos(prev => [newTodo, ...prev]);
-    setText('');
+      // console.log(data);
+      // console.log(data.todos);
+
+      setTodos(data.todos);
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 
+  async function addTodo() {
+    // console.log(text);
+    const options = {
+      method: 'POST',
+      body: text,
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8',
+      },
+    };
+    try {
+      const res = await fetch(BEURL + '/todos', options);
+      const data = await res.text();
+
+      // console.log(data);
+
+      getTodos();
+    } catch (err) {
+      console.log(err.message);
+    }
+
+    setText('');
+  }
+  async function deleteTodo(id) {
+    const options = {
+      method: 'DELETE',
+      body: id,
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8',
+      },
+    };
+    try {
+      const res = await fetch(BEURL + '/todos', options);
+      const data = await res.text();
+
+      // console.log(data);
+
+      getTodos();
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    //- add todo
+    addTodo();
+  }
+
+  //- get message on mount
   useEffect(() => {
     fetch(BEURL)
       .then(res => res.json())
       .then(data => setMessage(data.message));
-  }, [message]);
+  }, []);
 
+  //- get todos on mount
   useEffect(() => {
-    fetch(BEURL + '/todos')
-      .then(res => res.json())
-      .then(data => {
-        // console.log(data);
-        setTodos(data.todos);
-      })
-      .catch(err => console.error(err));
+    getTodos();
   }, []);
 
   return (
@@ -75,10 +111,17 @@ function App() {
           {todos.length > 0 &&
             todos.map(todo => (
               <motion.li
+                layout
                 key={todo.id}
-                initial={{ y: 30, scale: 1, rotate: 90 }}
-                animate={{ y: 0, scale: [0.8, 1.2, 1], rotate: 0 }}
+                variants={{
+                  hidden: { y: 30, scale: 1, rotate: 90 },
+                  visible: { y: 0, scale: [0.8, 1.2, 1], rotate: 0 },
+                }}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
                 transition={{ duration: 0.5 }}
+                onClick={() => deleteTodo(todo.id)}
               >
                 {todo.text}
               </motion.li>

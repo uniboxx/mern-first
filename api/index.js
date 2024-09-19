@@ -1,20 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import { JSONFilePreset } from 'lowdb/node';
+import { addTodo, deleteTodo, getTodos } from './db-actions.js';
 
 const app = express();
-const port = 8000;
+const port = 3000;
 
-const defaultData = { todos: [{ id: '12345678', text: 'test 1' }] };
-console.log(defaultData);
-const db = await JSONFilePreset('db.json', defaultData);
-await db.update(({ todos }) => todos);
-const { todos } = db.data;
-console.log(todos);
+app.use(express.json());
+app.use(express.text());
+app.use(cors());
 
-// await db.update(({ posts }) => posts.push('hello world'));
-// console.log(todos);
 const NODEJS_ENV = process.env.NODEJS_ENV;
 console.log(NODEJS_ENV);
 
@@ -23,7 +18,7 @@ const FEURL =
   NODEJS_ENV === 'production'
     ? 'https://mern-first-frontend.onrender.com'
     : 'http://localhost:5173';
-const BEURL = 'http://localhost:8000';
+
 const corsOptions = { origin: FEURL };
 
 app.use(express.json());
@@ -34,16 +29,22 @@ app.get('/', (req, res) => {
   res.json({ message: 'hello world' });
 });
 
+//- route get todos
 app.get('/todos', (req, res) => {
-  // console.log(posts);
-  res.json({ todos });
+  getTodos(res);
 });
 
-app.post('/todos', async (req, res) => {
-  // console.log(req.body);
-  await db.update(({ todos }) => todos.unshift(req.body));
+//- route add todo
+app.post('/todos', (req, res) => {
+  addTodo(req, res);
+});
+
+//- route del todo
+app.delete('/todos', (req, res) => {
+  deleteTodo(req.body, res);
 });
 
 app.listen(port, () => {
-  if (NODEJS_ENV === 'development') console.log(`Server listening on ${BEURL}`);
+  if (NODEJS_ENV === 'development')
+    console.log(`✅ Server listening on http://localhost:${port}`);
 });
