@@ -6,10 +6,6 @@ import { addTodo, deleteTodo, getTodos } from './db-actions.js';
 const app = express();
 const port = 3000;
 
-app.use(express.json());
-app.use(express.text());
-app.use(cors());
-
 const NODEJS_ENV = process.env.NODEJS_ENV;
 console.log(NODEJS_ENV);
 
@@ -23,7 +19,7 @@ const corsOptions = { origin: FEURL };
 
 app.use(express.json());
 app.use(express.text());
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.json({ message: 'hello world' });

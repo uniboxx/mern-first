@@ -43,7 +43,7 @@ function App() {
       const res = await fetch(BEURL + '/todos', options);
       const data = await res.text();
 
-      // console.log(data);
+      console.log(data);
 
       getTodos();
     } catch (err) {
@@ -64,7 +64,7 @@ function App() {
       const res = await fetch(BEURL + '/todos', options);
       const data = await res.text();
 
-      // console.log(data);
+      console.log(data);
 
       getTodos();
     } catch (err) {
@@ -81,9 +81,13 @@ function App() {
 
   //- get message on mount
   useEffect(() => {
-    fetch(BEURL)
-      .then(res => res.json())
-      .then(data => setMessage(data.message));
+    async function getMessage() {
+      const res = await fetch(BEURL);
+      const data = await res.json();
+      console.log(data);
+      setMessage(data.message);
+    }
+    getMessage();
   }, []);
 
   //- get todos on mount
