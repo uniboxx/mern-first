@@ -31,12 +31,12 @@ app.get('/', (req, res) => {
   res.json({ message: 'hello world' });
 });
 
-app.get('/todos', (req, res) => {
+app.get('/todos', cors(FEURL + '/todos'), (req, res) => {
   // console.log(posts);
   res.json({ todos });
 });
 
-app.post('/todos', async (req, res) => {
+app.post('/todos', cors(FEURL + '/todos'), async (req, res) => {
   // console.log(req.body);
   await db.update(({ todos }) => todos.unshift(req.body));
 });
